@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1a3270">
+  <meta name="color-scheme" content="dark">
+  <title>Fishy Diary</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐟</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Cartoon fish, drawn once and reused everywhere with <use href="#fish-art"> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- 26×16 pixel-art fish: one unit = one pixel -->
+      <symbol id="fish-art" viewBox="0 0 26 16" shape-rendering="crispEdges">
+        <rect x="10" y="0" width="4" height="1" fill="#1a1f3d"/>
+        <rect x="9" y="1" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="10" y="1" width="4" height="1" fill="#ff8a4c"/>
+        <rect x="14" y="1" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="8" y="2" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="9" y="2" width="6" height="1" fill="#ff8a4c"/>
+        <rect x="15" y="2" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="23" y="2" width="3" height="1" fill="#1a1f3d"/>
+        <rect x="6" y="3" width="11" height="1" fill="#1a1f3d"/>
+        <rect x="22" y="3" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="23" y="3" width="2" height="1" fill="#ff8a4c"/>
+        <rect x="25" y="3" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="4" y="4" width="2" height="1" fill="#1a1f3d"/>
+        <rect x="6" y="4" width="5" height="1" fill="#ffc48a"/>
+        <rect x="11" y="4" width="2" height="1" fill="#ffa868"/>
+        <rect x="13" y="4" width="1" height="1" fill="#ff7a45"/>
+        <rect x="14" y="4" width="2" height="1" fill="#ffa868"/>
+        <rect x="16" y="4" width="1" height="1" fill="#ff7a45"/>
+        <rect x="17" y="4" width="2" height="1" fill="#1a1f3d"/>
+        <rect x="21" y="4" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="22" y="4" width="3" height="1" fill="#ff8a4c"/>
+        <rect x="25" y="4" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="3" y="5" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="4" y="5" width="6" height="1" fill="#ffc48a"/>
+        <rect x="10" y="5" width="3" height="1" fill="#ffa868"/>
+        <rect x="13" y="5" width="1" height="1" fill="#ff7a45"/>
+        <rect x="14" y="5" width="2" height="1" fill="#ffa868"/>
+        <rect x="16" y="5" width="1" height="1" fill="#ff7a45"/>
+        <rect x="17" y="5" width="2" height="1" fill="#ffa868"/>
+        <rect x="19" y="5" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="21" y="5" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="22" y="5" width="3" height="1" fill="#ff8a4c"/>
+        <rect x="25" y="5" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="2" y="6" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="3" y="6" width="2" height="1" fill="#ffc48a"/>
+        <rect x="5" y="6" width="3" height="1" fill="#ffffff"/>
+        <rect x="8" y="6" width="2" height="1" fill="#ffc48a"/>
+        <rect x="10" y="6" width="3" height="1" fill="#ffa868"/>
+        <rect x="13" y="6" width="1" height="1" fill="#ff7a45"/>
+        <rect x="14" y="6" width="2" height="1" fill="#ffa868"/>
+        <rect x="16" y="6" width="1" height="1" fill="#ff7a45"/>
+        <rect x="17" y="6" width="3" height="1" fill="#ffa868"/>
+        <rect x="20" y="6" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="21" y="6" width="3" height="1" fill="#ff8a4c"/>
+        <rect x="24" y="6" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="1" y="7" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="2" y="7" width="3" height="1" fill="#ffc48a"/>
+        <rect x="5" y="7" width="2" height="1" fill="#ffffff"/>
+        <rect x="7" y="7" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="8" y="7" width="2" height="1" fill="#ffc48a"/>
+        <rect x="10" y="7" width="3" height="1" fill="#ffa868"/>
+        <rect x="13" y="7" width="1" height="1" fill="#ff7a45"/>
+        <rect x="14" y="7" width="2" height="1" fill="#ffa868"/>
+        <rect x="16" y="7" width="1" height="1" fill="#ff7a45"/>
+        <rect x="17" y="7" width="3" height="1" fill="#ffa868"/>
+        <rect x="20" y="7" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="21" y="7" width="2" height="1" fill="#ff8a4c"/>
+        <rect x="23" y="7" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="1" y="8" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="2" y="8" width="3" height="1" fill="#ffc48a"/>
+        <rect x="5" y="8" width="1" height="1" fill="#ffffff"/>
+        <rect x="6" y="8" width="2" height="1" fill="#1a1f3d"/>
+        <rect x="8" y="8" width="2" height="1" fill="#ffc48a"/>
+        <rect x="10" y="8" width="3" height="1" fill="#ffa868"/>
+        <rect x="13" y="8" width="1" height="1" fill="#ff7a45"/>
+        <rect x="14" y="8" width="2" height="1" fill="#ffa868"/>
+        <rect x="16" y="8" width="1" height="1" fill="#ff7a45"/>
+        <rect x="17" y="8" width="3" height="1" fill="#ffa868"/>
+        <rect x="20" y="8" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="21" y="8" width="1" height="1" fill="#ff8a4c"/>
+        <rect x="22" y="8" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="1" y="9" width="2" height="1" fill="#1a1f3d"/>
+        <rect x="3" y="9" width="6" height="1" fill="#ffc48a"/>
+        <rect x="9" y="9" width="3" height="1" fill="#ff8a4c"/>
+        <rect x="12" y="9" width="1" height="1" fill="#ffa868"/>
+        <rect x="13" y="9" width="1" height="1" fill="#ff7a45"/>
+        <rect x="14" y="9" width="2" height="1" fill="#ffa868"/>
+        <rect x="16" y="9" width="1" height="1" fill="#ff7a45"/>
+        <rect x="17" y="9" width="3" height="1" fill="#ffa868"/>
+        <rect x="20" y="9" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="21" y="9" width="2" height="1" fill="#ff8a4c"/>
+        <rect x="23" y="9" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="2" y="10" width="3" height="1" fill="#1a1f3d"/>
+        <rect x="5" y="10" width="2" height="1" fill="#ff8fb1"/>
+        <rect x="7" y="10" width="3" height="1" fill="#ffc48a"/>
+        <rect x="10" y="10" width="2" height="1" fill="#ff8a4c"/>
+        <rect x="12" y="10" width="1" height="1" fill="#ffa868"/>
+        <rect x="13" y="10" width="1" height="1" fill="#ff7a45"/>
+        <rect x="14" y="10" width="2" height="1" fill="#ffa868"/>
+        <rect x="16" y="10" width="1" height="1" fill="#ff7a45"/>
+        <rect x="17" y="10" width="3" height="1" fill="#ffa868"/>
+        <rect x="20" y="10" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="21" y="10" width="3" height="1" fill="#ff8a4c"/>
+        <rect x="24" y="10" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="3" y="11" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="4" y="11" width="15" height="1" fill="#ffe9c7"/>
+        <rect x="19" y="11" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="21" y="11" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="22" y="11" width="3" height="1" fill="#ff8a4c"/>
+        <rect x="25" y="11" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="4" y="12" width="2" height="1" fill="#1a1f3d"/>
+        <rect x="6" y="12" width="11" height="1" fill="#ffe9c7"/>
+        <rect x="17" y="12" width="2" height="1" fill="#1a1f3d"/>
+        <rect x="21" y="12" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="22" y="12" width="3" height="1" fill="#ff8a4c"/>
+        <rect x="25" y="12" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="6" y="13" width="11" height="1" fill="#1a1f3d"/>
+        <rect x="22" y="13" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="23" y="13" width="2" height="1" fill="#ff8a4c"/>
+        <rect x="25" y="13" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="8" y="14" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="9" y="14" width="2" height="1" fill="#ff8a4c"/>
+        <rect x="11" y="14" width="1" height="1" fill="#1a1f3d"/>
+        <rect x="23" y="14" width="3" height="1" fill="#1a1f3d"/>
+        <rect x="8" y="15" width="4" height="1" fill="#1a1f3d"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="bubbles" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-fish" aria-hidden="true">
+        <svg viewBox="0 0 26 16"><use href="#fish-art"/></svg>
+        <span class="mouth-bubble b1"></span>
+        <span class="mouth-bubble b2"></span>
+        <span class="mouth-bubble b3"></span>
+      </div>
+      <div class="hero-text">
+        <h1>Fishy Diary</h1>
+        <p>every catch is a little memory</p>
+      </div>
+      <button id="unitToggle" class="unit-toggle" type="button">in · lb</button>
+    </div>
+    <div class="waves" aria-hidden="true">
+      <svg class="w1" viewBox="0 0 2400 60" preserveAspectRatio="none" shape-rendering="crispEdges"><path d="M0 30 V30 H50 V24 H100 V20 H150 V18 H200 V18 H250 V20 H300 V24 H350 V30 H400 V36 H450 V40 H500 V40 H550 V36 H600 V30 H650 V24 H700 V20 H750 V18 H800 V18 H850 V20 H900 V24 H950 V30 H1000 V36 H1050 V40 H1100 V40 H1150 V36 H1200 V30 H1250 V24 H1300 V20 H1350 V18 H1400 V18 H1450 V20 H1500 V24 H1550 V30 H1600 V36 H1650 V40 H1700 V40 H1750 V36 H1800 V30 H1850 V24 H1900 V20 H1950 V18 H2000 V18 H2050 V20 H2100 V24 H2150 V30 H2200 V36 H2250 V40 H2300 V40 H2350 V36 H2400 V60 H0 Z"/></svg>
+      <svg class="w2" viewBox="0 0 2400 60" preserveAspectRatio="none" shape-rendering="crispEdges"><path d="M0 38 V38 H50 V34 H100 V30 H150 V28 H200 V28 H250 V30 H300 V34 H350 V38 H400 V44 H450 V46 H500 V46 H550 V44 H600 V38 H650 V34 H700 V30 H750 V28 H800 V28 H850 V30 H900 V34 H950 V38 H1000 V44 H1050 V46 H1100 V46 H1150 V44 H1200 V38 H1250 V34 H1300 V30 H1350 V28 H1400 V28 H1450 V30 H1500 V34 H1550 V38 H1600 V44 H1650 V46 H1700 V46 H1750 V44 H1800 V38 H1850 V34 H1900 V30 H1950 V28 H2000 V28 H2050 V30 H2100 V34 H2150 V38 H2200 V44 H2250 V46 H2300 V46 H2350 V44 H2400 V60 H0 Z"/></svg>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Gallery -->
+    <section id="view-gallery" class="view is-active" aria-labelledby="galleryTitle">
+      <div class="section-head">
+        <h2 id="galleryTitle">My catches <span id="catchCount" class="count-pill">0</span></h2>
+      </div>
+      <div class="toolbar">
+        <label class="pill-select">
+          <span aria-hidden="true">🐠</span>
+          <select id="filterSpecies" aria-label="Filter by species"></select>
+        </label>
+        <label class="pill-select">
+          <span aria-hidden="true">✨</span>
+          <select id="sortBy" aria-label="Sort catches">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="longest">Longest first</option>
+            <option value="heaviest">Heaviest first</option>
+          </select>
+        </label>
+      </div>
+      <div id="gallery" class="gallery"></div>
+      <div id="emptyState" class="empty" hidden>
+        <svg class="empty-fish" viewBox="0 0 26 16" aria-hidden="true"><use href="#fish-art"/></svg>
+        <h3 id="emptyTitle">No catches yet!</h3>
+        <p id="emptyText">Tap the big <b>+</b> button to log your first fish.</p>
+        <button class="btn btn-primary" type="button" data-action="new">🎣 Log a catch</button>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section id="view-stats" class="view" aria-labelledby="statsTitle">
+      <div class="section-head">
+        <h2 id="statsTitle">My fishing stats</h2>
+      </div>
+      <div id="statsBody"></div>
+      <div class="backup">
+        <h3>💾 Keep your diary safe</h3>
+        <p>Your catches live only in this browser on this device. Save a backup file now and then!</p>
+        <div class="backup-btns">
+          <button id="exportBtn" class="btn btn-soft" type="button">⬇️ Save backup</button>
+          <label class="btn btn-soft">⬆️ Restore backup
+            <input id="importInput" type="file" accept="application/json,.json" hidden>
+          </label>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Main">
+    <button class="tab is-active" type="button" data-view="gallery"><span class="tab-ico" aria-hidden="true">🖼️</span><span>Catches</span></button>
+    <button class="tab-add" type="button" data-action="new" aria-label="Log a new catch"><span aria-hidden="true">+</span></button>
+    <button class="tab" type="button" data-view="stats"><span class="tab-ico" aria-hidden="true">🏆</span><span>Stats</span></button>
+  </nav>
+
+  <!-- Add / edit catch -->
+  <dialog id="catchDialog" class="sheet" aria-labelledby="formTitle">
+    <form id="catchForm">
+      <div class="sheet-head">
+        <h2 id="formTitle">New catch!</h2>
+        <button type="button" class="icon-btn" data-close aria-label="Close">✕</button>
+      </div>
+
+      <div class="sheet-body">
+        <label class="photo-drop" id="photoDrop" for="photoInput">
+          <img id="photoPreview" alt="Photo of your catch" hidden>
+          <span class="photo-prompt" id="photoPrompt">
+            <span class="big" aria-hidden="true">📸</span>
+            <span>Add a photo</span>
+            <small>I'll grab the date &amp; spot from it if I can</small>
+          </span>
+          <span class="photo-busy" id="photoBusy" hidden>Reading photo… 💦</span>
+        </label>
+        <input id="photoInput" type="file" accept="image/*,.heic,.heif" class="visually-hidden">
+        <div class="photo-actions" id="photoActions" hidden>
+          <button type="button" id="editPhoto" class="link-btn">✂️ Edit</button>
+          <button type="button" id="changePhoto" class="link-btn">Change</button>
+          <button type="button" id="removePhoto" class="link-btn">Remove</button>
+        </div>
+        <p id="exifNote" class="exif-note" hidden></p>
+
+        <div class="field">
+          <label for="f-species">Species <span class="req">*</span></label>
+          <input id="f-species" name="species" list="speciesList" required autocomplete="off" placeholder="e.g. Bluegill">
+          <datalist id="speciesList"></datalist>
+        </div>
+
+        <div class="row-2">
+          <div class="field">
+            <label for="f-length">Length</label>
+            <div class="with-unit">
+              <input id="f-length" name="length" type="number" inputmode="decimal" step="any" min="0" placeholder="0">
+              <span class="unit" data-unit="len">in</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-weight">Weight</label>
+            <div class="with-unit">
+              <input id="f-weight" name="weight" type="number" inputmode="decimal" step="any" min="0" placeholder="0">
+              <span class="unit" data-unit="wt">lb</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-when">Date &amp; time</label>
+          <input id="f-when" name="caughtAt" type="datetime-local">
+        </div>
+
+        <div class="field">
+          <label for="f-location">Location</label>
+          <div class="with-btn">
+            <input id="f-location" name="location" autocomplete="off" placeholder="e.g. Willow Lake, north dock">
+            <button type="button" id="hereBtn" class="btn btn-soft btn-sm">📍 Here</button>
+          </div>
+          <p id="coordsLine" class="coords" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="f-bait">Bait or lure</label>
+          <input id="f-bait" name="bait" list="baitList" autocomplete="off" placeholder="e.g. Nightcrawler">
+          <datalist id="baitList"></datalist>
+        </div>
+
+        <fieldset class="field">
+          <legend>Weather</legend>
+          <div class="chips" id="weatherChips"></div>
+        </fieldset>
+
+        <div class="field">
+          <label for="f-note">Note</label>
+          <textarea id="f-note" name="note" rows="3" maxlength="300" placeholder="What made this one special?"></textarea>
+        </div>
+      </div>
+
+      <div class="sheet-foot">
+        <button type="button" id="deleteBtn" class="btn btn-danger" hidden>Delete</button>
+        <button type="button" class="btn btn-soft" data-close>Cancel</button>
+        <button type="submit" id="saveBtn" class="btn btn-primary">Save catch 🐟</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Photo editor: crop / rotate / flip -->
+  <dialog id="editorDialog" class="sheet editor" aria-labelledby="editorTitle">
+    <div class="sheet-head">
+      <h2 id="editorTitle">Edit photo</h2>
+      <button type="button" class="icon-btn" data-close aria-label="Close">✕</button>
+    </div>
+    <div class="editor-stage">
+      <img id="editorImg" alt="Photo being edited">
+    </div>
+    <div class="editor-tools" role="toolbar" aria-label="Photo tools">
+      <button type="button" class="btn btn-soft btn-sm" data-tool="rotate-left" aria-label="Rotate left">↺ Rotate</button>
+      <button type="button" class="btn btn-soft btn-sm" data-tool="rotate-right" aria-label="Rotate right">↻ Rotate</button>
+      <button type="button" class="btn btn-soft btn-sm" data-tool="flip-h" aria-label="Flip horizontally">⇆ Flip</button>
+      <button type="button" class="btn btn-soft btn-sm" data-tool="flip-v" aria-label="Flip vertically">⇅ Flip</button>
+      <button type="button" class="btn btn-soft btn-sm" data-tool="reset">⟲ Reset</button>
+    </div>
+    <div class="editor-ratios chips" role="radiogroup" aria-label="Crop shape">
+      <label class="chip"><input type="radio" name="ratio" value="free" checked><span>Free</span></label>
+      <label class="chip"><input type="radio" name="ratio" value="1"><span>1:1</span></label>
+      <label class="chip"><input type="radio" name="ratio" value="1.3333"><span>4:3</span></label>
+      <label class="chip"><input type="radio" name="ratio" value="0.75"><span>3:4</span></label>
+      <label class="chip"><input type="radio" name="ratio" value="1.7778"><span>16:9</span></label>
+    </div>
+    <p class="editor-hint">Drag the box corners to crop · pinch or scroll to zoom</p>
+    <div class="sheet-foot">
+      <button type="button" class="btn btn-soft" data-close>Cancel</button>
+      <button type="button" id="applyEdit" class="btn btn-primary">Apply ✓</button>
+    </div>
+  </dialog>
+
+  <!-- Catch details -->
+  <dialog id="detailDialog" class="sheet" aria-label="Catch details">
+    <div id="detailBody"></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/exifr@7.1.3/dist/full.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
